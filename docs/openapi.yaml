@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Contacts Book APP
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: Documentation about Contacts App
+tags:
+  - name: Contacts
+    description: Operations about contacts.
+  - name: Auth
+    description: Operations about Authentication & Authorization.
+  # теги, що ви будете використовувати
+servers:
+  - url: http://localhost:3000
+  - url: https://contacts-app-ejs8.onrender.com
+  #посилання на задеплоєний сайт
+paths:
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
+  /contacts/{contactId}:
+    get:
+      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
+  # тут будуть посилання на ендпоінти
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
