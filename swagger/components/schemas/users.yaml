@@ -1,0 +1,36 @@
+type: object
+required:
+  - email
+  - password
+properties:
+  name:
+    description: "User's name"
+    type: string
+    example: 'Ava Davis'
+  email:
+    description: "User's email"
+    type: string
+    example: example@mail.com
+  password:
+    description: "The user's password for authentication must be at least 8 characters long and no more than 64 characters."
+    type: string
+    example: "S3cur3P@ss1"
+  oldPassword:
+    description: "Previous user password for authentication must be at least 8 characters long and no more than 64 characters."
+    type: string
+    example: "A5mnr3T4&ss0"
+  gender:
+    description: "User's gender identity. Options may include male, female"
+    type: string
+    enum: ['male', 'female']
+    example: 'male'
+  avatar:
+    type: object
+    properties:
+      url:
+        type: string
+        format: uri
+        description: "URL of the user's avatar image."
+      public_id:
+        type: string
+        description: "Cloud storage identifier for the avatar."
