@@ -1,31 +1,23 @@
-// import { Router } from 'express';
+import { Router } from 'express';
+import { validateBody } from '../utils/validateBody.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import * as authController from '../controllers/auth.js';
 
-// import * as authController from '../controllers/auth.js';
+import { authLoginSchema, authRegisterSchema } from '../validation/auth.js';
 
-// import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+const authRouter = Router();
 
-// import { validateBody } from '../utils/validateBody.js';
+authRouter.post(
+  '/register',
+  validateBody(authRegisterSchema),
+  ctrlWrapper(authController.registerController),
+);
 
-// import {
-//   authLoginSchema,
-//   authRegisterSchema,
-//   emailResetSchema,
-//   resetPasswordSchema,
-// } from '../validation/auth.js';
-
-// const authRouter = Router();
-
-// authRouter.post(
-//   '/register',
-//   validateBody(authRegisterSchema),
-//   ctrlWrapper(authController.registerController),
-// );
-
-// authRouter.post(
-//   '/login',
-//   validateBody(authLoginSchema),
-//   ctrlWrapper(authController.loginController),
-// );
+authRouter.post(
+  '/login',
+  validateBody(authLoginSchema),
+  ctrlWrapper(authController.loginController),
+);
 // authRouter.post(
 //   '/send-reset-email',
 //   validateBody(emailResetSchema),
@@ -39,6 +31,6 @@
 
 // authRouter.post('/refresh', ctrlWrapper(authController.refreshTokenController));
 
-// authRouter.post('/logout', ctrlWrapper(authController.logoutController));
+authRouter.post('/logout', ctrlWrapper(authController.logoutController));
 
-// export default authRouter;
+export default authRouter;
