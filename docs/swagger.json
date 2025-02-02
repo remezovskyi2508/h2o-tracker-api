@@ -338,6 +338,11 @@
                 "description": "Cloud storage identifier for the avatar."
               }
             }
+          },
+          "dailyNorm": {
+            "type": "number",
+            "description": "Daily water consumption of the user",
+            "example": 1800
           }
         }
       }
