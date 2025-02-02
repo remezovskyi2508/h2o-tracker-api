@@ -19,6 +19,4 @@ export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
 
 export const SWAGGER_PATH = path.resolve('docs', 'swagger.json');
 
-
 //КОД ПИШЕМО З ЦЬОГО МІСЦЯ КОМЕНТАР ВИЩЕ ДЛЯ ЗРАЗКУ І МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ЗРАЗКУ.
-

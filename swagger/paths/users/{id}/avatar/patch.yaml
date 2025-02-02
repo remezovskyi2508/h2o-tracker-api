@@ -1,0 +1,56 @@
+tags:
+  - Users
+summary: Update user avatar
+operationId: updateAvatar
+description: Upload or update user profile avatar image
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    description: The id of the user to update.
+    schema:
+      type: string
+      example: 676b1e6e5e2acedb2277e99b
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          avatar:
+            description: Image file for avatar
+            type: string
+            format: binary
+        required:
+          - avatar
+responses:
+  "200":
+    description: Avatar successfully updated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Avatar updated successfully"
+            data:
+              type: object
+              properties:
+                avatarUrl:
+                  type: string
+                  example: "https://res.cloudinary.com/your-cloud/image/upload/v1234567890/avatars/user-avatar.jpg"
+
+  "400":
+    $ref: ../../../../components/responses/400.yaml
+  "401":
+    $ref: ../../../../components/responses/401.yaml
+  "404":
+    $ref: ../../../../components/responses/404.yaml
+  "500":
+    $ref: ../../../../components/responses/400.yaml
