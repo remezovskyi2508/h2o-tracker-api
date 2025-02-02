@@ -22,8 +22,7 @@ export const updateUser = async (filter, update, options = {}) => {
   if (!result) return null;
 
   return {
-    isNew: upsert && !result._id,
+    isNew: upsert,
     data: result,
   };
 };
-
