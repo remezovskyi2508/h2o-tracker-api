@@ -17,7 +17,6 @@ const userRouter = Router();
 userRouter.get(
   '/:id',
   isValidId,
-  validateBody(userValidSchema.userSchema),
   ctrlWrapper(userController.getUserByIdController),
 );
 
