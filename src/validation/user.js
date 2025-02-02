@@ -7,6 +7,7 @@ export const userSchema = Joi.object({
   gender: Joi.string().valid('female', 'male'),
   password: Joi.string().min(8).max(64).required(),
   oldPassword: Joi.string().min(8).max(64),
+  dailyNorm: Joi.number().max(15000)
 });
 
 export const userUpdateSchema = Joi.object({
@@ -17,9 +18,7 @@ export const userUpdateSchema = Joi.object({
     'string.email': 'Invalid email format',
   }),
   gender: Joi.string().valid('female', 'male').optional(),
-  // avatar: Joi.string().min(5).optional().messages({
-  //   'string.uri': 'Invalid URL format for a avatar',
-  // }),
+
 });
 
 export const useravatarUpdateSchema = Joi.object({
