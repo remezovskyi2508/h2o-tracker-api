@@ -323,9 +323,10 @@
               "male",
               "female"
             ],
-            "example": "male"
+            "example": "female"
           },
           "avatar": {
+            "description": "User profile avatar image",
             "type": "object",
             "properties": {
               "url": {
@@ -341,7 +342,7 @@
           },
           "dailyNorm": {
             "type": "number",
-            "description": "Daily water consumption of the user",
+            "description": "Daily water consumption of the user, cannot exceed 15000",
             "example": 1800
           }
         }
