@@ -21,7 +21,7 @@ export const userUpdateSchema = Joi.object({
 
 });
 
-export const useravatarUpdateSchema = Joi.object({
+export const userAvatarUpdateSchema = Joi.object({
   avatar: Joi.object({
     url: Joi.string().uri().required(),
     public_id: Joi.string().required(),

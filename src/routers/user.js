@@ -6,17 +6,18 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 import { upload } from '../middlewares/upload.js';
 import { validateBody } from '../utils/validateBody.js';
-import { userUpdateSchema, useravatarUpdateSchema } from '../validation/user.js';
+import * as userValidSchema from '../validation/user.js';
 
 const userRouter = Router();
 
 // userRouter.use(authenticate);
 
-userRouter.get('/', ctrlWrapper(userController.getUsersController));
+// userRouter.get('/', ctrlWrapper(userController.getUsersController));
 
 userRouter.get(
   '/:id',
   isValidId,
+  validateBody(userValidSchema.userSchema),
   ctrlWrapper(userController.getUserByIdController),
 );
 
@@ -24,15 +25,15 @@ userRouter.patch(
   '/:id/avatar',
   isValidId,
   upload.single('avatar'),
-  validateBody(useravatarUpdateSchema),
+  validateBody(userValidSchema.userAvatarUpdateSchema),
   ctrlWrapper(userController.updateUserAvatar),
 );
 
 userRouter.patch(
   '/:id',
   isValidId,
- upload.single('avatar'),
-  validateBody(userUpdateSchema),
+  upload.single('photo'),
+  validateBody(userValidSchema.userUpdateSchema),
   ctrlWrapper(userController.patchUserController),
 );
 
