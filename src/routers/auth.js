@@ -18,6 +18,9 @@ authRouter.post(
   validateBody(authLoginSchema),
   ctrlWrapper(authController.loginController),
 );
+
+authRouter.post('/logout', ctrlWrapper(authController.logoutController));
+
 // authRouter.post(
 //   '/send-reset-email',
 //   validateBody(emailResetSchema),
@@ -30,7 +33,5 @@ authRouter.post(
 // );
 
 // authRouter.post('/refresh', ctrlWrapper(authController.refreshTokenController));
-
-authRouter.post('/logout', ctrlWrapper(authController.logoutController));
 
 export default authRouter;

@@ -1,0 +1,16 @@
+tags:
+  - Auth
+summary: Log out of the system
+operationId: logoutUser
+description: 'Logout user from the system by clearing authentication tokens and session'
+security:
+  - bearerAuth: []
+responses:
+  '204':
+    description: Successful logout - Tokens and session have been cleared, the user has successfully logged out.
+  '404':
+    description: Session not found - The specified sessionId is missing or not found on the server.
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    description: Server error - An unpredictable error occurred while processing the request.
+    $ref: ../../../components/responses/500.yaml

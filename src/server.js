@@ -4,11 +4,11 @@ import cors from 'cors';
 import authRouter from './routers/auth.js';
 import userRouter from './routers/user.js';
 
-//import { getEnvVar } from './utils/getEnvVar.js';
+import { getEnvVar } from './utils/getEnvVar.js';
 //import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-//import { authenticate } from './middlewares/authenticate.js';
+import { authenticate } from './middlewares/authenticate.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
@@ -29,10 +29,7 @@ export const setupServer = () => {
 
   // app.use('/water', authenticate, contactsRouter);
 
-
-  app.use("/users", userRouter);
-
-
+  app.use('/users', userRouter);
 
   app.use('/api-docs', swaggerDocs());
 
