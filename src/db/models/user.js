@@ -28,6 +28,10 @@ const userSchema = new Schema(
     oldPassword: {
       type: String,
     },
+    dailyNorm: {
+      type: Number,
+      default: 1800,
+    }
   },
   {
     versionKey: false,
