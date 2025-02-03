@@ -14,11 +14,11 @@ properties:
   password:
     description: "The user's password for authentication must be at least 8 characters long and no more than 64 characters."
     type: string
-    example: "S3cur3P@ss1"
+    example: 'S3cur3P@ss1'
   oldPassword:
-    description: "Previous user password for authentication must be at least 8 characters long and no more than 64 characters."
+    description: 'Previous user password for authentication must be at least 8 characters long and no more than 64 characters.'
     type: string
-    example: "A5mnr3T4&ss0"
+    example: 'A5mnr3T4&ss0'
   gender:
     description: "User's gender identity. Options may include male, female"
     type: string
@@ -34,7 +34,7 @@ properties:
         description: "URL of the user's avatar image."
       public_id:
         type: string
-        description: "Cloud storage identifier for the avatar."
+        description: 'Cloud storage identifier for the avatar.'
   dailyNorm:
     type: number
     description: Daily water consumption of the user, cannot exceed 15000

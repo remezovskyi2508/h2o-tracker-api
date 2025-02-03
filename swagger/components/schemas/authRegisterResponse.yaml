@@ -1,0 +1,22 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    example: 201
+  message:
+    type: string
+    example: 'Successfully registered a user!'
+  data:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: '67a0e9c6d68fd2d13913a587'
+      email:
+        type: string
+        format: email
+        example: 'user@example.com'
