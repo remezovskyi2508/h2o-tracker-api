@@ -7,12 +7,15 @@ import { authLoginSchema, authRegisterSchema } from '../validation/auth.js';
 
 const authRouter = Router();
 
+
 authRouter.post(
   '/register',
   validateBody(authRegisterSchema),
+
   ctrlWrapper(authController.registerController),
 );
-
+console.log(authController);
+console.log(authController.loginController);
 authRouter.post(
   '/login',
   validateBody(authLoginSchema),

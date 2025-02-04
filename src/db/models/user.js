@@ -31,6 +31,7 @@ const userSchema = new Schema(
     dailyNorm: {
       type: Number,
       default: 1800,
+      max: 15000,
     }
   },
   {

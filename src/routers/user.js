@@ -12,8 +12,6 @@ const userRouter = Router();
 
 // userRouter.use(authenticate);
 
-// userRouter.get('/', ctrlWrapper(userController.getUsersController));
-
 userRouter.get(
   '/:id',
   isValidId,

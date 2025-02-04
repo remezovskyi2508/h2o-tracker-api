@@ -2,7 +2,12 @@ import UserCollection from "../db/models/user.js";
 
 
 export const getUserById = async (id) => {
-  return await UserCollection.findById(id);
+ 
+  console.log('Searching for user with id:', id);
+  const user = await UserCollection.findById(id);
+  console.log('Found user:', user);
+  return user;
+
 };
 
 

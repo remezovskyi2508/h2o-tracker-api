@@ -1,41 +1,43 @@
-// import createHttpError from 'http-errors';
-// import bcrypt from 'bcrypt';
-// import { randomBytes } from 'crypto';
-// import path from 'node:path';
-// import { readFile } from 'fs/promises';
-// import Handlebars from 'handlebars';
-// import jwt from 'jsonwebtoken';
-// import { getEnvVar } from '../utils/getEnvVar.js';
-
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { accessTokenLifetime } from '../constants/users.js';
-import path from 'node:path';
-import { readFile } from 'fs/promises';
-import Handlebars from 'handlebars';
-import jwt from 'jsonwebtoken';
-import { getEnvVar } from '../utils/getEnvVar.js';
 import UserAuthCollection from '../db/models/userAuth.js';
 import SessionCollection from '../db/models/session.js';
+import UserCollection from "../db/models/user.js";
+
 
 export const register = async (payload) => {
   const { email, password } = payload;
-  const user = await UserAuthCollection.findOne({ email });
-  if (user) {
-    throw createHttpError(409, 'Email is already in use');
+
+  // Перевірка чи існує користувач
+  const existingUserAuth = await UserAuthCollection.findOne({ email });
+  const existingUser = await UserCollection.findOne({ email });
+
+  if (existingUserAuth || existingUser) {
+    throw createHttpError(409, 'Email in use');
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await UserAuthCollection.create({
-    ...payload,
-    password: hashPassword,
-  }); //юзер,емейл,пароль
+  // Створення в UserAuthCollection
+  const newUserAuth = await UserAuthCollection.create({
+    email,
+    password: hashPassword
+  });
 
-  return newUser;
+  // Створення в UserCollection
+  const newUser = await UserCollection.create({
+    email,
+    password: hashPassword
+  });
+
+  return {
+    userAuth: newUserAuth,
+    user: newUser
+  };
 };
-
+//=========================
 export const login = async ({ email, password }) => {
   const user = await UserAuthCollection.findOne({ email });
   if (!user) {
