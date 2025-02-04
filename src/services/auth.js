@@ -4,8 +4,7 @@ import { randomBytes } from 'crypto';
 import { accessTokenLifetime } from '../constants/users.js';
 import UserAuthCollection from '../db/models/userAuth.js';
 import SessionCollection from '../db/models/session.js';
-import UserCollection from "../db/models/user.js";
-
+import UserCollection from '../db/models/user.js';
 
 export const register = async (payload) => {
   const { email, password } = payload;
@@ -23,23 +22,23 @@ export const register = async (payload) => {
   // Створення в UserAuthCollection
   const newUserAuth = await UserAuthCollection.create({
     email,
-    password: hashPassword
+    password: hashPassword,
   });
 
   // Створення в UserCollection
   const newUser = await UserCollection.create({
     email,
-    password: hashPassword
+    password: hashPassword,
   });
 
   return {
     userAuth: newUserAuth,
-    user: newUser
+    user: newUser,
   };
 };
-//=========================
+
 export const login = async ({ email, password }) => {
-  const user = await UserAuthCollection.findOne({ email });
+  const user = await UserCollection.findOne({ email });
   if (!user) {
     throw createHttpError(401, 'Email or password invalid');
   }
@@ -47,15 +46,25 @@ export const login = async ({ email, password }) => {
   if (!passwordCompare) {
     throw createHttpError(401, 'Email or password invalid');
   }
+
   await SessionCollection.deleteOne({ userId: user._id });
-
   const accessToken = randomBytes(30).toString('base64');
+  const accessTokenValidUntil = new Date(Date.now() + accessTokenLifetime);
 
-  return SessionCollection.create({
+  const session = await SessionCollection.create({
     userId: user._id,
     accessToken,
-    accessTokenValidUntil: Date.now() + accessTokenLifetime,
+    accessTokenValidUntil
   });
+
+  return {
+    session: {
+      id: session._id,
+      accessToken: session.accessToken,
+      accessTokenValidUntil: session.accessTokenValidUntil
+    },
+    userId: user._id
+  };
 };
 
 export const getSession = (filter) => SessionCollection.findOne(filter);
