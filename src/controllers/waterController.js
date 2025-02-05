@@ -5,7 +5,7 @@ import {
   getTodayWaterRecords,
 } from '../services/waterService.js';
 
-import * as statsService from '../services/waterStatsService';
+import * as statsService from '../services/waterStatsService.js';
 
 export const addWaterRecord = async (req, res, next) => {
   try {
@@ -49,9 +49,7 @@ export const getTodayWater = async (req, res, next) => {
       (sum, record) => sum + record.waterVolume,
       0,
     );
-    const percentage = ((totalAmount / req.user.dailyWaterGoal) * 100).toFixed(
-      2,
-    );
+    const percentage = ((totalAmount / req.user.dailyNorm) * 100).toFixed(2);
 
     res.json({ percentage, totalAmount, records });
   } catch (err) {

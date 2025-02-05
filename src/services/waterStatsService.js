@@ -1,4 +1,4 @@
-import Water from '../db/models/water.js';
+import { WaterCollection } from '../db/models/water.js';
 import createHttpError from 'http-errors';
 
 export const getMonthlyStats = async (userId, year, month, dailyNorm) => {
@@ -7,16 +7,16 @@ export const getMonthlyStats = async (userId, year, month, dailyNorm) => {
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0, 23, 59, 59);
 
-  const records = await Water.find({
+  const records = await WaterCollection.find({
     user: userId,
     date: { $gte: startDate, $lte: endDate },
   });
 
   const dailyStats = {};
-  records.forEach(({ date, amount }) => {
+  records.forEach(({ date, waterVolume }) => {
     const day = date.getDate();
     if (!dailyStats[day]) dailyStats[day] = { total: 0, count: 0 };
-    dailyStats[day].total += amount;
+    dailyStats[day].total += waterVolume;
     dailyStats[day].count += 1;
   });
 
