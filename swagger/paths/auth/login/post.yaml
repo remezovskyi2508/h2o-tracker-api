@@ -47,6 +47,9 @@ responses:
                 accessToken:
                   type: string
                   example: '2ksAkpuxa/4Cw+md/EGqNadYKtx0WQAkzA+bsA19'
+                userId:
+                  type: string
+                  example: '67a0e9c6d68fd2d13913a587'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '500':
