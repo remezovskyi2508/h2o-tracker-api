@@ -8,11 +8,13 @@ import {
 import * as statsService from '../../src/services/waterStatsService.js';
 
 export const addWaterRecord = async (req, res, next) => {
+  const date = new Date(Number(req.body.date));
+
   try {
     const newRecord = await addWaterEntry(
       req.user.id,
       req.body.waterVolume,
-      req.body.date,
+      date,
     );
     res.status(201).json(newRecord);
   } catch (error) {
@@ -23,7 +25,7 @@ export const addWaterRecord = async (req, res, next) => {
 export const updateWaterRecord = async (req, res, next) => {
   try {
     const record = await updateWaterEntry(
-      req.params.id,
+      req.params.recordId,
       req.user.id,
       req.body.waterVolume,
     );

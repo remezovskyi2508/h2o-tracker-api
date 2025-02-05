@@ -34,6 +34,20 @@ paths:
   /users/{id}/avatar:
     patch:
       $ref: ../swagger/paths/users/{id}/avatar/patch.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{id}:
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+  /water/today:
+    get:
+      $ref: ../swagger/paths/water/today/get.yaml
+  /water/month:
+    get:
+      $ref: ../swagger/paths/water/month/get.yaml
 
   # тут будуть посилання на ендпоінти
 components:
