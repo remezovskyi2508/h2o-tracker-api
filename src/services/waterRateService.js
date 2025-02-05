@@ -1,7 +1,7 @@
-import { UserCollection } from '../db/models/user.js';
+import UserAuthCollection from '../db/models/userAuth.js';
 
 export const updateUserWaterRate = async (userId, dailyNorm) => {
-  return await UserCollection.findByIdAndUpdate(
+  return await UserAuthCollection.findByIdAndUpdate(
     userId,
     { dailyNorm },
     { new: true },

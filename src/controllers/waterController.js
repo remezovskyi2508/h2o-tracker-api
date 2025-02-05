@@ -5,7 +5,7 @@ import {
   getTodayWaterRecords,
 } from '../services/waterService.js';
 
-import * as statsService from '../services/waterStatsService';
+import * as statsService from '../../src/services/waterStatsService.js';
 
 export const addWaterRecord = async (req, res, next) => {
   try {
@@ -35,7 +35,7 @@ export const updateWaterRecord = async (req, res, next) => {
 
 export const deleteWaterRecord = async (req, res, next) => {
   try {
-    await deleteWaterEntry(req.params.id, req.user.id);
+    await deleteWaterEntry(req.params.recordId, req.user.id);
     res.status(200).json({ message: 'Record deleted' });
   } catch (error) {
     next(error);
@@ -49,10 +49,8 @@ export const getTodayWater = async (req, res, next) => {
       (sum, record) => sum + record.waterVolume,
       0,
     );
-    const percentage = ((totalAmount / req.user.dailyWaterGoal) * 100).toFixed(
-      2,
-    );
-
+    const dailyGoal = req.user.dailyWaterGoal || 1500;
+    const percentage = ((totalAmount / dailyGoal) * 100).toFixed(2);
     res.json({ percentage, totalAmount, records });
   } catch (err) {
     next(err);
@@ -60,15 +58,26 @@ export const getTodayWater = async (req, res, next) => {
 };
 
 export const getMonthlyStats = async (req, res, next) => {
+  console.log(req.user);
+
   try {
+    const userId = req.user.id;
+    const { year, month } = req.query;
+    const parsedYear = parseInt(year, 10);
+    const parsedMonth = parseInt(month, 10);
+
+    if (isNaN(parsedYear) || isNaN(parsedMonth)) {
+      return res.status(400).json({ message: 'Invalid year or month' });
+    }
+
     const stats = await statsService.getMonthlyStats(
-      req.user.id,
-      req.query.year,
-      req.query.month,
+      userId,
+      parsedYear,
+      parsedMonth,
       req.user.dailyNorm,
     );
     res.json(stats);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
   }
 };

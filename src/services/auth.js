@@ -18,17 +18,18 @@ import jwt from 'jsonwebtoken';
 import { getEnvVar } from '../utils/getEnvVar.js';
 import UserAuthCollection from '../db/models/userAuth.js';
 import SessionCollection from '../db/models/session.js';
+import UserCollection from '../db/models/user.js';
 
 export const register = async (payload) => {
   const { email, password } = payload;
-  const user = await UserAuthCollection.findOne({ email });
+  const user = await UserCollection.findOne({ email });
   if (user) {
     throw createHttpError(409, 'Email is already in use');
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await UserAuthCollection.create({
+  const newUser = await UserCollection.create({
     ...payload,
     password: hashPassword,
   }); //юзер,емейл,пароль
@@ -37,7 +38,7 @@ export const register = async (payload) => {
 };
 
 export const login = async ({ email, password }) => {
-  const user = await UserAuthCollection.findOne({ email });
+  const user = await UserCollection.findOne({ email });
   if (!user) {
     throw createHttpError(401, 'Email or password invalid');
   }
@@ -58,7 +59,7 @@ export const login = async ({ email, password }) => {
 
 export const getSession = (filter) => SessionCollection.findOne(filter);
 
-export const getUser = (filter) => UserAuthCollection.findOne(filter);
+export const getUser = (filter) => UserCollection.findOne(filter);
 
 export const logout = async (sessionId) => {
   const session = await SessionCollection.findById(sessionId);

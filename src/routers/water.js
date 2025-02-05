@@ -39,3 +39,5 @@ waterRouter.patch(
 waterRouter.delete('/:recordId', isValidId, ctrlWrapper(deleteWaterRecord));
 
 waterRouter.get('/month', ctrlWrapper(getMonthlyStats));
+
+export default waterRouter;

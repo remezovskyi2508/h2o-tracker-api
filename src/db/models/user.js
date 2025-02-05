@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 
- import { handleSaveError, setUpdateSettings } from './hooks.js';
-
+import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const userSchema = new Schema(
   {
@@ -19,7 +18,7 @@ const userSchema = new Schema(
     },
     avatar: {
       url: String,
-      public_id: String
+      public_id: String,
     },
     password: {
       type: String,
@@ -31,7 +30,7 @@ const userSchema = new Schema(
     dailyNorm: {
       type: Number,
       default: 1800,
-    }
+    },
   },
   {
     versionKey: false,
