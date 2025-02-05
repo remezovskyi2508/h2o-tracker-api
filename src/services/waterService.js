@@ -1,3 +1,4 @@
+
 import createHttpError from 'http-errors';
 import { WaterCollection } from '../db/models/water.js';
 
@@ -5,6 +6,7 @@ export const addWaterEntry = async (userId, waterVolume, date) => {
   if (!waterVolume || waterVolume < 1 || waterVolume > 5000) {
     throw createHttpError(400, 'Water volume must be between 1 and 5000 ml');
   }
+
   return await new WaterCollection({
     userId,
     waterVolume,
@@ -26,6 +28,7 @@ export const updateWaterEntry = async (recordId, userId, waterVolume) => {
 };
 
 export const deleteWaterEntry = async (recordId, userId) => {
+
   const record = await WaterCollection.findOneAndDelete({
     _id: recordId,
     userId,
@@ -39,6 +42,7 @@ export const getTodayWaterRecords = async (userId) => {
   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
+
 
   return await WaterCollection.find({
     userId,

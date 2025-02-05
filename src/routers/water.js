@@ -30,13 +30,13 @@ waterRouter.post(
 waterRouter.get('/today', ctrlWrapper(getTodayWater));
 
 waterRouter.patch(
-  '/:recordId',
+  '/:id',
   isValidId,
   validateBody(updateWaterSchema),
   ctrlWrapper(updateWaterRecord),
 );
 
-waterRouter.delete('/:recordId', isValidId, ctrlWrapper(deleteWaterRecord));
+waterRouter.delete('/:id', isValidId, ctrlWrapper(deleteWaterRecord));
 
 waterRouter.get('/month', ctrlWrapper(getMonthlyStats));
 

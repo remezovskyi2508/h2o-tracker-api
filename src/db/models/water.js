@@ -26,4 +26,4 @@ const waterSchema = new Schema(
 
 waterSchema.post('save', handleSaveError);
 
-export const WaterCollection = model('Water', waterSchema);
+export const WaterCollection = model('water', waterSchema);

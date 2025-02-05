@@ -51,8 +51,10 @@ export const getTodayWater = async (req, res, next) => {
       (sum, record) => sum + record.waterVolume,
       0,
     );
+
     const dailyGoal = req.user.dailyWaterGoal || 1500;
     const percentage = ((totalAmount / dailyGoal) * 100).toFixed(2);
+    
     res.json({ percentage, totalAmount, records });
   } catch (err) {
     next(err);

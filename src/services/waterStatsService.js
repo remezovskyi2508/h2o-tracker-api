@@ -1,3 +1,4 @@
+
 import createHttpError from 'http-errors';
 import { WaterCollection } from '../db/models/water.js';
 
@@ -22,6 +23,7 @@ export const getMonthlyStats = async (userId, year, month, dailyNorm) => {
   records.forEach(({ date, waterVolume }) => {
     const utcDate = new Date(date);
     const day = utcDate.getUTCDate();
+    
     if (!dailyStats[day]) dailyStats[day] = { total: 0, count: 0 };
     dailyStats[day].total += waterVolume;
     dailyStats[day].count += 1;
