@@ -46,7 +46,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userAuthSchema"
+                "$ref": "#/components/schemas/authRegister"
               }
             }
           }
@@ -57,7 +57,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/authRegisterResponse"
+                  "$ref": "#/components/schemas/auth201"
                 }
               }
             }
@@ -143,6 +143,10 @@
                         "accessToken": {
                           "type": "string",
                           "example": "2ksAkpuxa/4Cw+md/EGqNadYKtx0WQAkzA+bsA19"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "67a0e9c6d68fd2d13913a587"
                         }
                       }
                     }
@@ -449,24 +453,25 @@
       }
     },
     "schemas": {
-      "userAuthSchema": {
+      "authRegister": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
         "properties": {
           "email": {
             "type": "string",
+            "format": "email",
             "example": "user@example.com"
           },
           "password": {
             "type": "string",
             "example": "password123"
           }
-        }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       },
-      "authRegisterResponse": {
+      "auth201": {
         "type": "object",
         "required": [
           "status",
@@ -485,7 +490,7 @@
           "data": {
             "type": "object",
             "properties": {
-              "_id": {
+              "userId": {
                 "type": "string",
                 "example": "67a0e9c6d68fd2d13913a587"
               },

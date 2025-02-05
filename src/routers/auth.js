@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import * as authController from '../controllers/auth.js';
-
 import { authLoginSchema, authRegisterSchema } from '../validation/auth.js';
 
 const authRouter = Router();
@@ -21,6 +20,8 @@ authRouter.post(
 
 authRouter.post('/logout', ctrlWrapper(authController.logoutController));
 
+export default authRouter;
+
 // authRouter.post(
 //   '/send-reset-email',
 //   validateBody(emailResetSchema),
@@ -33,5 +34,3 @@ authRouter.post('/logout', ctrlWrapper(authController.logoutController));
 // );
 
 // authRouter.post('/refresh', ctrlWrapper(authController.refreshTokenController));
-
-export default authRouter;
