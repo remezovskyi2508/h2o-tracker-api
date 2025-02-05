@@ -5,6 +5,19 @@ operationId: getMonthlyStats
 description: 'Get statistic for month'
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: year
+    required: true
+    schema:
+      type: integer
+      example: 2025
+  - in: query
+    name: month
+    required: true
+    schema:
+      type: integer
+      example: 02
 responses:
   '200':
     description: Ok
