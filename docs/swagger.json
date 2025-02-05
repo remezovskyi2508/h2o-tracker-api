@@ -28,6 +28,170 @@
     }
   ],
   "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registering a new user",
+        "operationId": "registerUser",
+        "description": "Registration of a new user in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/authRegister"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/auth201"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - Invalid registration data entered.",
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "description": "Conflict - Email is already in use for another user.",
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "description": "Server error - There was an unforeseen error during registration.",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log in to the system",
+        "operationId": "loginUser",
+        "description": "Sign in existing user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "2ksAkpuxa/4Cw+md/EGqNadYKtx0WQAkzA+bsA19"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "67a0e9c6d68fd2d13913a587"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log out of the system",
+        "operationId": "logoutUser",
+        "description": "Logout user from the system by clearing authentication tokens and session",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful logout - Tokens and session have been cleared, the user has successfully logged out."
+          },
+          "404": {
+            "description": "Session not found - The specified sessionId is missing or not found on the server.",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "description": "Server error - An unpredictable error occurred while processing the request.",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "get": {
         "tags": [
@@ -279,6 +443,311 @@
           }
         }
       }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add water",
+        "operationId": "addWaterRecord",
+        "description": "Add new water record",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date",
+                  "waterVolume"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "Date",
+                    "type": "string",
+                    "example": "1738753481051"
+                  },
+                  "waterVolume": {
+                    "description": "Water volume",
+                    "type": "string",
+                    "example": "100",
+                    "minimum": 1,
+                    "maximum": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "date",
+                    "waterVolume",
+                    "userId",
+                    "_id"
+                  ],
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "example": "2025-02-05T11:04:41.051Z"
+                    },
+                    "waterVolume": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "67a32cdba56bdcc1ac56408b"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "67a3496aeace5a0f67a013c0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record",
+        "operationId": "deleteWaterRecord",
+        "description": "Delete water record",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67a32cf5a56bdcc1ac564095"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record deleted"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update record by id",
+        "operationId": "updateWaterRecord",
+        "description": "Update record by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67a32cf5a56bdcc1ac564095"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "waterVolume"
+                ],
+                "properties": {
+                  "waterVolume": {
+                    "description": "Water volume",
+                    "type": "string",
+                    "example": "100",
+                    "minimum": 1,
+                    "maximum": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/waterRecord"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/today": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of water records",
+        "operationId": "getTodayWater",
+        "description": "Get list of water records from today",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "percentage",
+                    "totalAmount",
+                    "records"
+                  ],
+                  "properties": {
+                    "percentage": {
+                      "type": "string",
+                      "example": "26.67"
+                    },
+                    "totalAmount": {
+                      "type": "integer",
+                      "example": 1400
+                    },
+                    "records": {
+                      "type": "array",
+                      "description": "List of used water(mL)",
+                      "items": {
+                        "$ref": "#/components/schemas/waterRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get statistic for month",
+        "operationId": "getMonthlyStats",
+        "description": "Get statistic for month",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 2025
+            }
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 2
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "List of days statistics",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "date",
+                      "dailyGoal",
+                      "percentage",
+                      "entries"
+                    ],
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "example": "2, February"
+                      },
+                      "dailyGoal": {
+                        "type": "string",
+                        "example": "1.8 L"
+                      },
+                      "percentage": {
+                        "type": "string",
+                        "example": "16.67%"
+                      },
+                      "entries": {
+                        "type": "integer",
+                        "example": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -289,6 +758,56 @@
       }
     },
     "schemas": {
+      "authRegister": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "auth201": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 201
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully registered a user!"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "example": "67a0e9c6d68fd2d13913a587"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "user@example.com"
+              }
+            }
+          }
+        }
+      },
       "users": {
         "type": "object",
         "required": [
@@ -346,6 +865,33 @@
             "example": 1800
           }
         }
+      },
+      "waterRecord": {
+        "type": "object",
+        "required": [
+          "date",
+          "waterVolume",
+          "userId",
+          "_id"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2025-02-05T11:04:41.051Z"
+          },
+          "waterVolume": {
+            "type": "integer",
+            "example": 100
+          },
+          "userId": {
+            "type": "string",
+            "example": "67a32cdba56bdcc1ac56408b"
+          },
+          "_id": {
+            "type": "string",
+            "example": "67a3496aeace5a0f67a013c0"
+          }
+        }
       }
     },
     "responses": {
@@ -383,6 +929,9 @@
                         },
                         {
                           "example": "Invalid ID format"
+                        },
+                        {
+                          "example": "Invalid year or month"
                         }
                       ]
                     }
@@ -458,9 +1007,36 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "oneOf": [
+                        {
+                          "example": "User not found"
+                        },
+                        {
+                          "example": "Entry not found"
+                        }
+                      ]
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Email is already in use"
                 }
               }
             }

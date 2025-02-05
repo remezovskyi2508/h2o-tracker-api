@@ -17,19 +17,37 @@ servers:
   - url: https://contacts-app-ejs8.onrender.com
   #посилання на задеплоєний сайт
 paths:
-  # /contacts:
-  #   get:
-  #     $ref: ../swagger/paths/contacts/get.yaml
-  #   post:
-  #     $ref: ../swagger/paths/contacts/post.yaml
-    /users/{id}:
-      get:
-        $ref: ../swagger/paths/users/{id}/get.yaml
-      patch:
-        $ref: ../swagger/paths/users/{id}/patch.yaml
-    /users/{id}/avatar:
-      patch:
-        $ref: ../swagger/paths/users/{id}/avatar/patch.yaml
+  /register:
+    post:
+      $ref: ../swagger/paths/auth/register/post.yaml
+  /login:
+    post:
+      $ref: ../swagger/paths/auth/login/post.yaml
+  /logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
+  /users/{id}:
+    get:
+      $ref: ../swagger/paths/users/{id}/get.yaml
+    patch:
+      $ref: ../swagger/paths/users/{id}/patch.yaml
+  /users/{id}/avatar:
+    patch:
+      $ref: ../swagger/paths/users/{id}/avatar/patch.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{id}:
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+  /water/today:
+    get:
+      $ref: ../swagger/paths/water/today/get.yaml
+  /water/month:
+    get:
+      $ref: ../swagger/paths/water/month/get.yaml
 
   # тут будуть посилання на ендпоінти
 components:

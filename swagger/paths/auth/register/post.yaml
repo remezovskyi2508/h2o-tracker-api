@@ -1,0 +1,29 @@
+tags:
+  - Auth
+summary: Registering a new user
+operationId: registerUser
+description: 'Registration of a new user in the system'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/authRegister.yaml
+responses:
+  '201':
+    description: User successfully registered
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/auth201.yaml
+  '400':
+    description: 'Invalid request - Invalid registration data entered.'
+    $ref: '../../../components/responses/400.yaml'
+  '409':
+    description: 'Conflict - Email is already in use for another user.'
+    $ref: '../../../components/responses/409.yaml'
+  '500':
+    description: 'Server error - There was an unforeseen error during registration.'
+    $ref: '../../../components/responses/500.yaml'

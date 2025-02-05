@@ -1,0 +1,53 @@
+tags:
+  - Water
+summary: Add water
+operationId: addWaterRecord
+description: 'Add new water record'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+          - waterVolume
+        properties:
+          date:
+            description: 'Date'
+            type: string
+            example: '1738753481051'
+          waterVolume:
+            description: 'Water volume'
+            type: string
+            example: '100'
+            minimum: 1
+            maximum: 5000
+responses:
+  '201':
+    description: 'Created'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - date
+            - waterVolume
+            - userId
+            - _id
+          properties:
+            date:
+              type: string
+              example: '2025-02-05T11:04:41.051Z'
+            waterVolume:
+              type: integer
+              example: 100
+            userId:
+              type: string
+              example: '67a32cdba56bdcc1ac56408b'
+            _id:
+              type: string
+              example: '67a3496aeace5a0f67a013c0'
+  '400':
+    $ref: ../../components/responses/400.yaml
