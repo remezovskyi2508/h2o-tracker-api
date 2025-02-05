@@ -7,6 +7,6 @@ export const addWaterSchema = Joi.object({
 });
 
 export const updateWaterSchema = Joi.object({
-  date: Joi.string().pattern(dateRegexp),
+  date: Joi.string(),
   waterVolume: Joi.number().min(1).max(5000),
 });

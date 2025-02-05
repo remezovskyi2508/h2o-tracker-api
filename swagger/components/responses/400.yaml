@@ -22,5 +22,6 @@ content:
             message:
               type: string
               oneOf:
-                - example: "Invalid body"
-                - example: "Invalid ID format"
+                - example: 'Invalid body'
+                - example: 'Invalid ID format'
+                - example: 'Invalid year or month'

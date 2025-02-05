@@ -21,4 +21,6 @@ content:
           properties:
             message:
               type: string
-              example: 'User not found'
+              oneOf:
+                - example: 'User not found'
+                - example: 'Entry not found'

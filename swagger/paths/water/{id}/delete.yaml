@@ -1,0 +1,19 @@
+tags:
+  - Water
+summary: Delete water record
+operationId: deleteWaterRecord
+description: 'Delete water record'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '67a32cf5a56bdcc1ac564095'
+responses:
+  '200':
+    description: 'Record deleted'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

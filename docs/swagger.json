@@ -439,6 +439,291 @@
           }
         }
       }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add water",
+        "operationId": "addWaterRecord",
+        "description": "Add new water record",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date",
+                  "waterVolume"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "Date",
+                    "type": "string",
+                    "example": "1738753481051"
+                  },
+                  "waterVolume": {
+                    "description": "Water volume",
+                    "type": "string",
+                    "example": "100",
+                    "minimum": 1,
+                    "maximum": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "date",
+                    "waterVolume",
+                    "userId",
+                    "_id"
+                  ],
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "example": "2025-02-05T11:04:41.051Z"
+                    },
+                    "waterVolume": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "67a32cdba56bdcc1ac56408b"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "67a3496aeace5a0f67a013c0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record",
+        "operationId": "deleteWaterRecord",
+        "description": "Delete water record",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67a32cf5a56bdcc1ac564095"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record deleted"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update record by id",
+        "operationId": "updateWaterRecord",
+        "description": "Update record by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67a32cf5a56bdcc1ac564095"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "waterVolume"
+                ],
+                "properties": {
+                  "waterVolume": {
+                    "description": "Water volume",
+                    "type": "string",
+                    "example": "100",
+                    "minimum": 1,
+                    "maximum": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/waterRecord"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/today": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of water records",
+        "operationId": "getTodayWater",
+        "description": "Get list of water records from today",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "percentage",
+                    "totalAmount",
+                    "records"
+                  ],
+                  "properties": {
+                    "percentage": {
+                      "type": "string",
+                      "example": "26.67"
+                    },
+                    "totalAmount": {
+                      "type": "integer",
+                      "example": 1400
+                    },
+                    "records": {
+                      "type": "array",
+                      "description": "List of used water(mL)",
+                      "items": {
+                        "$ref": "#/components/schemas/waterRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get statistic for month",
+        "operationId": "getMonthlyStats",
+        "description": "Get statistic for month",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "List of days statistics",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "date",
+                      "dailyGoal",
+                      "percentage",
+                      "entries"
+                    ],
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "example": "2, February"
+                      },
+                      "dailyGoal": {
+                        "type": "string",
+                        "example": "1.8 L"
+                      },
+                      "percentage": {
+                        "type": "string",
+                        "example": "16.67%"
+                      },
+                      "entries": {
+                        "type": "integer",
+                        "example": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -555,6 +840,33 @@
             "example": 1800
           }
         }
+      },
+      "waterRecord": {
+        "type": "object",
+        "required": [
+          "date",
+          "waterVolume",
+          "userId",
+          "_id"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2025-02-05T11:04:41.051Z"
+          },
+          "waterVolume": {
+            "type": "integer",
+            "example": 100
+          },
+          "userId": {
+            "type": "string",
+            "example": "67a32cdba56bdcc1ac56408b"
+          },
+          "_id": {
+            "type": "string",
+            "example": "67a3496aeace5a0f67a013c0"
+          }
+        }
       }
     },
     "responses": {
@@ -592,6 +904,9 @@
                         },
                         {
                           "example": "Invalid ID format"
+                        },
+                        {
+                          "example": "Invalid year or month"
                         }
                       ]
                     }
@@ -667,7 +982,14 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "oneOf": [
+                        {
+                          "example": "User not found"
+                        },
+                        {
+                          "example": "Entry not found"
+                        }
+                      ]
                     }
                   }
                 }
