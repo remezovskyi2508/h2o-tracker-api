@@ -14,7 +14,7 @@ tags:
   # теги, що ви будете використовувати
 servers:
   - url: http://localhost:3000
-  - url: https://contacts-app-ejs8.onrender.com
+  - url: https://h2o-tracker-api.onrender.com
   #посилання на задеплоєний сайт
 paths:
   /auth/register:
