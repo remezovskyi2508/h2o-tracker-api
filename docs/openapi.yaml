@@ -17,13 +17,16 @@ servers:
   - url: https://contacts-app-ejs8.onrender.com
   #посилання на задеплоєний сайт
 paths:
-  /register:
+  /auth/register:
     post:
       $ref: ../swagger/paths/auth/register/post.yaml
-  /login:
+  /auth/login:
     post:
       $ref: ../swagger/paths/auth/login/post.yaml
-  /logout:
+  /auth/reset-pwd:
+    put:
+      $ref: ../swagger/paths/auth/reset-pwd/put.yaml
+  /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout/post.yaml
   /users/{id}:
