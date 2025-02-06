@@ -5,7 +5,6 @@ import authRouter from './routers/auth.js';
 import userRouter from './routers/user.js';
 import waterRouter from './routers/water.js';
 
-
 import { getEnvVar } from './utils/getEnvVar.js';
 
 import { logger } from './middlewares/logger.js';
@@ -14,7 +13,6 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { authenticate } from './middlewares/authenticate.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
-import waterRouter from './routers/water.js';
 
 dotenv.config();
 
@@ -36,7 +34,6 @@ export const setupServer = () => {
   app.use('/auth', authRouter);
 
   app.use('/water', authenticate, waterRouter);
-
 
   app.use('/users', userRouter);
 
