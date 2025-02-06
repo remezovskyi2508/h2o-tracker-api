@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { dateRegexp } from '../constants/users.js';
 
 export const addWaterSchema = Joi.object({
   date: Joi.string().required(),
