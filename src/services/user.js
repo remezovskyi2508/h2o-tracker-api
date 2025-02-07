@@ -1,14 +1,17 @@
+import SessionCollection from "../db/models/session.js";
 import UserCollection from "../db/models/user.js";
 
 
 export const getUserById = async (id) => {
- 
+
   console.log('Searching for user with id:', id);
   const user = await UserCollection.findById(id);
   console.log('Found user:', user);
   return user;
 
 };
+export const getUser = (filter) => UserCollection.findOne(filter);
+
 
 
 export const updateUser = async (filter, update, options = {}) => {
@@ -31,3 +34,4 @@ export const updateUser = async (filter, update, options = {}) => {
     data: result,
   };
 };
+export const getSession = (filter) => SessionCollection.findOne(filter);

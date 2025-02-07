@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { isValidUserId } from '../middlewares/isValidUserId.js';
-// import { authenticate } from '../middlewares/authenticate.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import * as userController from '../controllers/user.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
@@ -10,7 +10,7 @@ import * as userValidSchema from '../validation/user.js';
 
 const userRouter = Router();
 
-// userRouter.use(authenticate);
+userRouter.use(authenticate);
 
 userRouter.get(
   '/:id',
