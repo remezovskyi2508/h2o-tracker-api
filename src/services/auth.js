@@ -2,11 +2,6 @@ import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { accessTokenLifetime } from '../constants/users.js';
-import path from 'node:path';
-import { readFile } from 'fs/promises';
-import Handlebars from 'handlebars';
-import jwt from 'jsonwebtoken';
-import { getEnvVar } from '../utils/getEnvVar.js';
 import SessionCollection from '../db/models/session.js';
 import UserCollection from '../db/models/user.js';
 

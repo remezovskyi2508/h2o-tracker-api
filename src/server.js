@@ -5,8 +5,6 @@ import authRouter from './routers/auth.js';
 import userRouter from './routers/user.js';
 import waterRouter from './routers/water.js';
 
-import { getEnvVar } from './utils/getEnvVar.js';
-
 import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
