@@ -17,7 +17,7 @@ requestBody:
           date:
             description: 'Date'
             type: string
-            example: '1738753481051'
+            example: '2025-01-01T00:01'
           waterVolume:
             description: 'Water volume'
             type: string
