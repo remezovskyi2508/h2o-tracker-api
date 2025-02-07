@@ -1,5 +1,6 @@
 import * as authServices from '../services/auth.js';
 
+
 export const registerController = async (req, res) => {
   const { userId, email } = await authServices.register(req.body);
 
@@ -26,7 +27,6 @@ export const loginController = async (req, res) => {
     httpOnly: true,
     expires: new Date(accessTokenValidUntil),
   });
-
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
