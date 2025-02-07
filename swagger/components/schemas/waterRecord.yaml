@@ -1,0 +1,19 @@
+type: object
+required:
+  - date
+  - waterVolume
+  - userId
+  - _id
+properties:
+  date:
+    type: string
+    example: '2025-02-05T11:04:41.051Z'
+  waterVolume:
+    type: integer
+    example: 100
+  userId:
+    type: string
+    example: '67a32cdba56bdcc1ac56408b'
+  _id:
+    type: string
+    example: '67a3496aeace5a0f67a013c0'

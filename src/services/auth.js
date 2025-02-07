@@ -2,38 +2,34 @@ import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { accessTokenLifetime } from '../constants/users.js';
-import UserAuthCollection from '../db/models/userAuth.js';
+import path from 'node:path';
+import { readFile } from 'fs/promises';
+import Handlebars from 'handlebars';
+import jwt from 'jsonwebtoken';
+import { getEnvVar } from '../utils/getEnvVar.js';
 import SessionCollection from '../db/models/session.js';
 import UserCollection from '../db/models/user.js';
 
 export const register = async (payload) => {
   const { email, password } = payload;
 
-  // Перевірка чи існує користувач
-  const existingUserAuth = await UserAuthCollection.findOne({ email });
-  const existingUser = await UserCollection.findOne({ email });
+  const user = await UserCollection.findOne({ email });
 
-  if (existingUserAuth || existingUser) {
-    throw createHttpError(409, 'Email in use');
+  if (user) {
+    throw createHttpError(409, 'Email is already in use');
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  // Створення в UserAuthCollection
-  const newUserAuth = await UserAuthCollection.create({
-    email,
-    password: hashPassword,
-  });
-
-  // Створення в UserCollection
   const newUser = await UserCollection.create({
-    email,
+    ...payload,
     password: hashPassword,
   });
 
+  const userId = newUser._id;
   return {
-    userAuth: newUserAuth,
-    user: newUser,
+    userId,
+    email: newUser.email,
   };
 };
 
@@ -54,22 +50,36 @@ export const login = async ({ email, password }) => {
   const session = await SessionCollection.create({
     userId: user._id,
     accessToken,
-    accessTokenValidUntil
+    accessTokenValidUntil: Date.now() + accessTokenLifetime,
   });
-
   return {
-    session: {
-      id: session._id,
-      accessToken: session.accessToken,
-      accessTokenValidUntil: session.accessTokenValidUntil
-    },
-    userId: user._id
+    accessToken,
+    accessTokenValidUntil: session.accessTokenValidUntil,
+    sessionId: session._id,
+    userId: user._id,
   };
 };
 
 export const getSession = (filter) => SessionCollection.findOne(filter);
 
-export const getUser = (filter) => UserAuthCollection.findOne(filter);
+export const getUser = (filter) => UserCollection.findOne(filter);
+
+export const resetPassword = async (_id, oldPassword, newPassword) => {
+  const user = await UserCollection.findById(_id);
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const passwordCompare = await bcrypt.compare(oldPassword, user.password);
+  if (!passwordCompare) {
+    throw createHttpError(401, 'Old password is incorrect');
+  }
+
+  const hashNewPassword = await bcrypt.hash(newPassword, 10);
+
+  user.password = hashNewPassword;
+  await user.save();
+};
 
 export const logout = async (sessionId) => {
   const session = await SessionCollection.findById(sessionId);

@@ -13,7 +13,7 @@ properties:
   data:
     type: object
     properties:
-      _id:
+      userId:
         type: string
         example: '67a0e9c6d68fd2d13913a587'
       email:

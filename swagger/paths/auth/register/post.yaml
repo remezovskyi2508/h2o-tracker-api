@@ -10,14 +10,14 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: ../../../components/schemas/userAuthSchema.yaml
+        $ref: ../../../components/schemas/authRegister.yaml
 responses:
   '201':
     description: User successfully registered
     content:
       application/json:
         schema:
-          $ref: ../../../components/schemas/authRegisterResponse.yaml
+          $ref: ../../../components/schemas/auth201.yaml
   '400':
     description: 'Invalid request - Invalid registration data entered.'
     $ref: '../../../components/responses/400.yaml'

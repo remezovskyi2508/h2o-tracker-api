@@ -2,35 +2,50 @@ import * as authServices from '../services/auth.js';
 
 
 export const registerController = async (req, res) => {
-  const { userAuth, user } = await authServices.register(req.body);
+  const { userId, email } = await authServices.register(req.body);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
     data: {
-      id: user._id,
-      email: user.email
-    }
+      userId,
+      email,
+    },
   });
 };
 
 export const loginController = async (req, res) => {
-  const { session, userId } = await authServices.login(req.body);
-  res.cookie('accessToken', session.accessToken, {
+  const { accessToken, sessionId, userId, accessTokenValidUntil } =
+    await authServices.login(req.body);
+
+  res.cookie('accessToken', accessToken, {
     httpOnly: true,
-    expires: session.accessTokenValidUntil,
+    expires: new Date(accessTokenValidUntil),
   });
-  res.cookie('sessionId', session.id, {
+
+  res.cookie('sessionId', sessionId, {
     httpOnly: true,
-    expires: session.accessTokenValidUntil,
+    expires: new Date(accessTokenValidUntil),
   });
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
-      accessToken: session.accessToken,
+      accessToken,
       userId,
     },
+  });
+};
+
+export const resetPasswodController = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { _id } = req.user;
+
+  await authServices.resetPassword(_id, oldPassword, newPassword);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Password successfully changed!',
   });
 };
 

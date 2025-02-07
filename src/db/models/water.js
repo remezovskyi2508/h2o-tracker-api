@@ -1,13 +1,11 @@
 import { model, Schema } from 'mongoose';
 import { handleSaveError } from './hooks.js';
-import { dateRegexp } from '../../constants/users.js';
 
 const waterSchema = new Schema(
   {
     date: {
       type: Date,
       required: true,
-      match: dateRegexp,
     },
     waterVolume: {
       type: Number,
@@ -17,7 +15,7 @@ const waterSchema = new Schema(
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true,
     },
   },
@@ -28,4 +26,4 @@ const waterSchema = new Schema(
 
 waterSchema.post('save', handleSaveError);
 
-export const WaterCollection = model('Water', waterSchema);
+export const WaterCollection = model('water', waterSchema);
