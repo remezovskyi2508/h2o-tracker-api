@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isValidId } from '../middlewares/isValidId.js';
+import { isValidUserId } from '../middlewares/isValidUserId.js';
 // import { authenticate } from '../middlewares/authenticate.js';
 import * as userController from '../controllers/user.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -14,13 +14,13 @@ const userRouter = Router();
 
 userRouter.get(
   '/:id',
-  isValidId,
+  isValidUserId,
   ctrlWrapper(userController.getUserByIdController),
 );
 
 userRouter.patch(
   '/:id/avatar',
-  isValidId,
+  isValidUserId,
   upload.single('avatar'),
   validateBody(userValidSchema.userAvatarUpdateSchema),
   ctrlWrapper(userController.updateUserAvatar),
@@ -28,7 +28,7 @@ userRouter.patch(
 
 userRouter.patch(
   '/:id',
-  isValidId,
+  isValidUserId,
   upload.single('photo'),
   validateBody(userValidSchema.userUpdateSchema),
   ctrlWrapper(userController.patchUserController),
