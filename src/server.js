@@ -11,7 +11,7 @@ import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { authenticate } from './middlewares/authenticate.js';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 dotenv.config();
@@ -25,7 +25,7 @@ export const setupServer = () => {
 
   app.use(express.json());
 
-  app.use(cookieParser());
+  // app.use(cookieParser());
 
   app.use(logger);
 
