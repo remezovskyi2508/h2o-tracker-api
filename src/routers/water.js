@@ -4,6 +4,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   addWaterSchema,
   updateWaterSchema,
+  updateWaterRateSchema,
 } from '../validation/waterValidation.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -16,6 +17,7 @@ import {
 } from '../controllers/waterController.js';
 import { validateBody } from '../utils/validateBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { isValidUserId } from '../middlewares/isValidUserId.js';
 
 const waterRouter = Router();
 
