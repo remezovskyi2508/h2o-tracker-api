@@ -4,15 +4,6 @@ import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const userSchema = new Schema(
   {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
     name: {
       type: String,
     },
@@ -39,7 +30,8 @@ const userSchema = new Schema(
     dailyNorm: {
       type: Number,
       default: 1800,
-    },
+      max: 15000,
+    }
   },
   {
     versionKey: false,

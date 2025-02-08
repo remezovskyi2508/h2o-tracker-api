@@ -44,8 +44,8 @@ export const login = async ({ email, password }) => {
   }
 
   await SessionCollection.deleteOne({ userId: user._id });
-
   const accessToken = randomBytes(30).toString('base64');
+  const accessTokenValidUntil = new Date(Date.now() + accessTokenLifetime);
 
   const session = await SessionCollection.create({
     userId: user._id,
