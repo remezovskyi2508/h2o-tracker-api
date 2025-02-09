@@ -26,12 +26,13 @@ userRouter.patch(
   ctrlWrapper(userController.updateUserAvatar),
 );
 
+
 userRouter.patch(
   '/:id',
+  authenticate,
   isValidUserId,
-  upload.single('photo'),
   validateBody(userValidSchema.userUpdateSchema),
-  ctrlWrapper(userController.patchUserController),
+  ctrlWrapper(userController.updateUserController)
 );
 
 export default userRouter;

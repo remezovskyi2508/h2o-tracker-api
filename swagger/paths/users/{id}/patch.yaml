@@ -34,6 +34,14 @@ requestBody:
             type: string
             enum: ['male', 'female']
             example: 'female'
+          oldPassword:
+            type: string
+            description: Old user password
+            example: 'password123'
+          newPassword:
+            type: string
+            description: New user password
+            example: 'password098'
 responses:
   '200':
     description: User's data updated successfully.

@@ -23,9 +23,6 @@ paths:
   /auth/login:
     post:
       $ref: ../swagger/paths/auth/login/post.yaml
-  /auth/reset-pwd:
-    put:
-      $ref: ../swagger/paths/auth/reset-pwd/put.yaml
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout/post.yaml
@@ -51,7 +48,6 @@ paths:
   /water/month:
     get:
       $ref: ../swagger/paths/water/month/get.yaml
-
   # тут будуть посилання на ендпоінти
 components:
   securitySchemes:
