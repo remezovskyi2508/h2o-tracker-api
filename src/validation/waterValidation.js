@@ -11,5 +11,5 @@ export const updateWaterSchema = Joi.object({
 });
 
 export const updateWaterRateSchema = Joi.object({
-  waterRate: Joi.number().min(0).max(15000).required(),
+  dailyNorm: Joi.number().min(0).max(15000).required(),
 });

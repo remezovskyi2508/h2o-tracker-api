@@ -15,14 +15,19 @@ import {
   getTodayWater,
   getMonthlyStats,
 } from '../controllers/waterController.js';
+import { updateWaterRate } from '../controllers/waterRateController.js';
 import { validateBody } from '../utils/validateBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
-import { isValidUserId } from '../middlewares/isValidUserId.js';
 
 const waterRouter = Router();
 
 waterRouter.use(authenticate);
 
+waterRouter.patch(
+  '/water-rate',
+  validateBody(updateWaterRateSchema),
+  ctrlWrapper(updateWaterRate),
+);
 waterRouter.post(
   '/',
   validateBody(addWaterSchema),

@@ -39,7 +39,7 @@ responses:
           properties:
             date:
               type: string
-              example: '2025-02-05T11:04:41.051Z'
+              example: '2025-01-01T00:01'
             waterVolume:
               type: integer
               example: 100

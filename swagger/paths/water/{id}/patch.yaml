@@ -18,8 +18,13 @@ requestBody:
       schema:
         type: object
         required:
+          - date
           - waterVolume
         properties:
+          date:
+            description: 'Date'
+            type: string
+            example: '2025-01-01T00:01'
           waterVolume:
             description: 'Water volume'
             type: string
@@ -28,10 +33,14 @@ requestBody:
             maximum: 5000
 responses:
   '200':
-    description: 'Ok'
+    description: 'Water record updated successfully'
     content:
       application/json:
         schema:
           $ref: ../../../components/schemas/waterRecord.yaml
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'

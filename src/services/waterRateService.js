@@ -1,14 +1,14 @@
 import createHttpError from 'http-errors';
-import { UserCollection } from '../db/models/user.js';
+import UserCollection from '../db/models/user.js';
 
-export const updateUserWaterRate = async (userId, waterRate) => {
+export const updateUserWaterRate = async (userId, dailyNorm) => {
   const updatedUser = await UserCollection.findByIdAndUpdate(
     userId,
-    { waterRate },
+    { dailyNorm },
     { new: true, runValidators: true },
   );
   if (!updatedUser) {
-    throw createError(404, 'User not found');
+    throw createHttpError(404, 'User not found');
   }
 
   return updatedUser;

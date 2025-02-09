@@ -575,7 +575,7 @@
                   "properties": {
                     "date": {
                       "type": "string",
-                      "example": "2025-02-05T11:04:41.051Z"
+                      "example": "2025-01-01T00:01"
                     },
                     "waterVolume": {
                       "type": "integer",
@@ -596,6 +596,68 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/water/water-rate": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Updating water daily norm",
+        "operationId": "updateWaterRate",
+        "description": "Updating water daily norm.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "waterRate": {
+                    "type": "number",
+                    "example": 2500
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Water rate updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Water rate updated successfully"
+                    },
+                    "waterRate": {
+                      "type": "number",
+                      "example": 2500
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -662,9 +724,15 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "date",
                   "waterVolume"
                 ],
                 "properties": {
+                  "date": {
+                    "description": "Date",
+                    "type": "string",
+                    "example": "2025-01-01T00:01"
+                  },
                   "waterVolume": {
                     "description": "Water volume",
                     "type": "string",
@@ -679,7 +747,7 @@
         },
         "responses": {
           "200": {
-            "description": "Ok",
+            "description": "Water record updated successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -687,6 +755,12 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -952,7 +1026,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "example": "2025-02-05T11:04:41.051Z"
+            "example": "2025-01-01T00:01"
           },
           "waterVolume": {
             "type": "integer",
