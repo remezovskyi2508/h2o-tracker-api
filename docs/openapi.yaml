@@ -36,6 +36,9 @@ paths:
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
+  /water/water-rate:
+    patch:
+      $ref: ../swagger/paths/water/waterRate/patch.yaml
   /water/{id}:
     delete:
       $ref: ../swagger/paths/water/{id}/delete.yaml

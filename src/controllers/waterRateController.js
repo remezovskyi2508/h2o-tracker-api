@@ -1,11 +1,16 @@
 import { updateUserWaterRate } from '../services/waterRateService.js';
 
 export const updateWaterRate = async (req, res, next) => {
-  const { dailyNorm } = req.body;
-
   try {
-    const user = await updateUserWaterRate(req.user.id, dailyNorm);
-    res.status(200).json(user);
+    const { dailyNorm } = req.body;
+    const { _id } = req.user;
+
+    const updatedUser = await updateUserWaterRate(_id, dailyNorm);
+
+    res.json({
+      message: 'Water rate updated successfully',
+      dailyNorm: updatedUser.dailyNorm,
+    });
   } catch (error) {
     next(error);
   }
