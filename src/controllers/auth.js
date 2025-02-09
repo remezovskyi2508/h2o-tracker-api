@@ -19,12 +19,11 @@ export const loginController = async (req, res) => {
     await authServices.login(req.body);
 
   res.cookie('accessToken', accessToken, {
-    httpOnly: true,
     expires: new Date(accessTokenValidUntil),
   });
 
   res.cookie('sessionId', sessionId, {
-    httpOnly: true,
+
     expires: new Date(accessTokenValidUntil),
   });
   res.json({

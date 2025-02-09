@@ -1,20 +1,26 @@
+import mongoose from 'mongoose';
 import {
   addWaterEntry,
   updateWaterEntry,
   deleteWaterEntry,
   getTodayWaterRecords,
 } from '../services/waterService.js';
+import createHttpError from 'http-errors';
 
 import * as statsService from '../../src/services/waterStatsService.js';
 
 export const addWaterRecord = async (req, res, next) => {
-  const date = new Date(Number(req.body.date));
-
   try {
+    const inputDate = req.body.date ? new Date(req.body.date) : new Date();
+
+    if (isNaN(inputDate.getTime())) {
+      throw createHttpError(400, 'Invalid date format');
+    }
+
     const newRecord = await addWaterEntry(
       req.user.id,
       req.body.waterVolume,
-      date,
+      inputDate,
     );
     res.status(201).json(newRecord);
   } catch (error) {
@@ -24,12 +30,22 @@ export const addWaterRecord = async (req, res, next) => {
 
 export const updateWaterRecord = async (req, res, next) => {
   try {
-    const record = await updateWaterEntry(
-      req.params.recordId,
-      req.user.id,
-      req.body.waterVolume,
-    );
-    res.json(record);
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(createHttpError(400, 'Invalid recordId'));
+    }
+
+    const result = await updateWaterEntry(id, { ...req.body }, userId, {
+      new: true,
+    });
+
+    res.json({
+      status: 200,
+      message: 'Successfully updated the record!',
+      data: result,
+    });
   } catch (error) {
     next(error);
   }
@@ -37,7 +53,8 @@ export const updateWaterRecord = async (req, res, next) => {
 
 export const deleteWaterRecord = async (req, res, next) => {
   try {
-    await deleteWaterEntry(req.params.recordId, req.user.id);
+    const { id } = req.params;
+    await deleteWaterEntry(id, req.user.id);
     res.status(200).json({ message: 'Record deleted' });
   } catch (error) {
     next(error);
@@ -54,8 +71,12 @@ export const getTodayWater = async (req, res, next) => {
 
     const dailyGoal = req.user.dailyWaterGoal || 1500;
     const percentage = ((totalAmount / dailyGoal) * 100).toFixed(2);
-    
-    res.json({ percentage, totalAmount, records });
+
+    res.json({
+      percentage,
+      totalAmountLiters: (totalAmount / 1000).toFixed(2),
+      records,
+    });
   } catch (err) {
     next(err);
   }
