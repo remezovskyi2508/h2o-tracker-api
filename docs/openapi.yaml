@@ -13,7 +13,6 @@ tags:
     description: Operations about Authentication & Authorization.
   # теги, що ви будете використовувати
 servers:
-  - url: http://localhost:3000
   - url: https://h2o-tracker-api.onrender.com
   #посилання на задеплоєний сайт
 paths:
