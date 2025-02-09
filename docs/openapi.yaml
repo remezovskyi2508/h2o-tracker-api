@@ -13,7 +13,6 @@ tags:
     description: Operations about Authentication & Authorization.
   # теги, що ви будете використовувати
 servers:
-  - url: http://localhost:3000
   - url: https://h2o-tracker-api.onrender.com
   #посилання на задеплоєний сайт
 paths:
@@ -23,9 +22,6 @@ paths:
   /auth/login:
     post:
       $ref: ../swagger/paths/auth/login/post.yaml
-  /auth/reset-pwd:
-    put:
-      $ref: ../swagger/paths/auth/reset-pwd/put.yaml
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout/post.yaml
@@ -51,7 +47,6 @@ paths:
   /water/month:
     get:
       $ref: ../swagger/paths/water/month/get.yaml
-
   # тут будуть посилання на ендпоінти
 components:
   securitySchemes:

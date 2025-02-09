@@ -2,6 +2,7 @@ import createError from 'http-errors';
 import * as userServices from '../services/user.js';
 // import { getEnvVar } from "../utils/getEnvVar.js";
 import * as cloudUse from '../utils/saveFileToCloudinary.js';
+import { resetPassword } from '../services/auth.js';
 
 export const getUserByIdController = async (req, res) => {
   const { id } = req.params;
@@ -59,21 +60,22 @@ export const updateUserAvatar = async (req, res) => {
   });
 };
 
-export const patchUserController = async (req, res) => {
+export const updateUserController = async (req, res) => {
   const { id } = req.params;
-  const { body, file: avatar } = req;
+  const { oldPassword, newPassword, ...userData } = req.body;
+
 
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
-  let avatarUrl = null;
-  if (avatar) {
-    avatarUrl = await cloudUse.saveAvatarToCloudinary(avatar);
+  if (oldPassword && newPassword) {
+    await resetPassword(id, oldPassword, newPassword);
   }
+
   const result = await userServices.updateUser(
     { _id: id },
-    { ...body, ...(avatarUrl && { avatar: avatarUrl }) },
+    userData,
   );
 
   res.json({

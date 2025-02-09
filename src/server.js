@@ -4,9 +4,6 @@ import dotenv from 'dotenv';
 import authRouter from './routers/auth.js';
 import userRouter from './routers/user.js';
 import waterRouter from './routers/water.js';
-
-import { getEnvVar } from './utils/getEnvVar.js';
-
 import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -28,8 +25,6 @@ export const setupServer = () => {
   // app.use(cookieParser());
 
   app.use(logger);
-
-  // МІНЯЄМО ПІД НАШ ПРОЄКТ
 
   app.use('/auth', authRouter);
 

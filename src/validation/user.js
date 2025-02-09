@@ -18,6 +18,8 @@ export const userUpdateSchema = Joi.object({
     'string.email': 'Invalid email format',
   }),
   gender: Joi.string().valid('female', 'male').optional(),
+  oldPassword: Joi.string().min(8).max(64),
+   newPassword: Joi.string().min(8).max(64),
 
 });
 

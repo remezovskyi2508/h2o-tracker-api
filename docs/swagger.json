@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://h2o-tracker-api.onrender.com"
     }
   ],
@@ -30,6 +27,9 @@
   "paths": {
     "/auth/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "tags": [
           "Auth"
         ],
@@ -82,6 +82,9 @@
         "tags": [
           "Auth"
         ],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Log in to the system",
         "operationId": "loginUser",
         "description": "Sign in existing user",
@@ -96,6 +99,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "required": [
                   "email",
                   "password"
@@ -123,6 +130,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "required": [
                     "status",
                     "message",
@@ -164,83 +176,11 @@
         }
       }
     },
-    "/auth/reset-pwd": {
-      "put": {
+    "/auth/logout": {
+      "post": {
         "tags": [
           "Auth"
         ],
-        "summary": "Change password",
-        "operationId": "resetUserPassword",
-        "description": "Allows the user to change the old password to a new one if the old password is correct.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "oldPassword",
-                  "newPassword"
-                ],
-                "properties": {
-                  "oldPassword": {
-                    "type": "string",
-                    "description": "Old user password",
-                    "example": "password123"
-                  },
-                  "newPassword": {
-                    "type": "string",
-                    "description": "New user password",
-                    "example": "password098"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Password successfully changed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Password successfully changed"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized or old password is incorrect",
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "description": "Unauthorized or old password is incorrect",
-            "$ref": "#/components/responses/404"
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "post": {
         "tags": [
           "Auth"
         ],
@@ -272,6 +212,9 @@
         "tags": [
           "Users"
         ],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get User by id",
         "operationId": "getUserById",
         "description": "Retrieve a user data with the given id.",
@@ -299,6 +242,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "required": [
                     "status",
                     "message",
@@ -336,6 +284,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "Users"
+        ],
         "tags": [
           "Users"
         ],
@@ -384,7 +335,21 @@
                       "male",
                       "female"
                     ],
+                    "enum": [
+                      "male",
+                      "female"
+                    ],
                     "example": "female"
+                  },
+                  "oldPassword": {
+                    "type": "string",
+                    "description": "Old user password",
+                    "example": "password123"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "New user password",
+                    "example": "password098"
                   }
                 }
               }
@@ -435,6 +400,9 @@
         "tags": [
           "Users"
         ],
+        "tags": [
+          "Users"
+        ],
         "summary": "Update user avatar",
         "operationId": "updateAvatar",
         "description": "Upload or update user profile avatar image",
@@ -467,6 +435,9 @@
                     "format": "binary"
                   }
                 },
+                "required": [
+                  "avatar"
+                ]
                 "required": [
                   "avatar"
                 ]
@@ -524,6 +495,9 @@
         "tags": [
           "Water"
         ],
+        "tags": [
+          "Water"
+        ],
         "summary": "Add water",
         "operationId": "addWaterRecord",
         "description": "Add new water record",
@@ -537,6 +511,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "date",
+                  "waterVolume"
+                ],
                 "required": [
                   "date",
                   "waterVolume"
@@ -566,6 +544,12 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "date",
+                    "waterVolume",
+                    "userId",
+                    "_id"
+                  ],
                   "required": [
                     "date",
                     "waterVolume",
@@ -605,6 +589,9 @@
         "tags": [
           "Water"
         ],
+        "tags": [
+          "Water"
+        ],
         "summary": "Delete water record",
         "operationId": "deleteWaterRecord",
         "description": "Delete water record",
@@ -637,6 +624,9 @@
         "tags": [
           "Water"
         ],
+        "tags": [
+          "Water"
+        ],
         "summary": "Update record by id",
         "operationId": "updateWaterRecord",
         "description": "Update record by id",
@@ -661,6 +651,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "waterVolume"
+                ],
                 "required": [
                   "waterVolume"
                 ],
@@ -699,6 +692,9 @@
         "tags": [
           "Water"
         ],
+        "tags": [
+          "Water"
+        ],
         "summary": "Get list of water records",
         "operationId": "getTodayWater",
         "description": "Get list of water records from today",
@@ -714,6 +710,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "percentage",
+                    "totalAmount",
+                    "records"
+                  ],
                   "required": [
                     "percentage",
                     "totalAmount",
@@ -748,6 +749,9 @@
     },
     "/water/month": {
       "get": {
+        "tags": [
+          "Water"
+        ],
         "tags": [
           "Water"
         ],
@@ -789,6 +793,12 @@
                   "description": "List of days statistics",
                   "items": {
                     "type": "object",
+                    "required": [
+                      "date",
+                      "dailyGoal",
+                      "percentage",
+                      "entries"
+                    ],
                     "required": [
                       "date",
                       "dailyGoal",
@@ -850,9 +860,18 @@
           "email",
           "password"
         ]
+        "required": [
+          "email",
+          "password"
+        ]
       },
       "auth201": {
         "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "required": [
           "status",
           "message",
@@ -889,6 +908,10 @@
           "email",
           "password"
         ],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "description": "User's name",
@@ -913,6 +936,10 @@
           "gender": {
             "description": "User's gender identity. Options may include male, female",
             "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
             "enum": [
               "male",
               "female"
@@ -943,6 +970,12 @@
       },
       "waterRecord": {
         "type": "object",
+        "required": [
+          "date",
+          "waterVolume",
+          "userId",
+          "_id"
+        ],
         "required": [
           "date",
           "waterVolume",
@@ -981,6 +1014,11 @@
                 "message",
                 "data"
               ],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -992,6 +1030,9 @@
                 },
                 "data": {
                   "type": "object",
+                  "required": [
+                    "message"
+                  ],
                   "required": [
                     "message"
                   ],
@@ -1028,6 +1069,11 @@
                 "message",
                 "data"
               ],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1039,6 +1085,9 @@
                 },
                 "data": {
                   "type": "object",
+                  "required": [
+                    "message"
+                  ],
                   "required": [
                     "message"
                   ],
@@ -1065,6 +1114,11 @@
                 "message",
                 "data"
               ],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1076,6 +1130,9 @@
                 },
                 "data": {
                   "type": "object",
+                  "required": [
+                    "message"
+                  ],
                   "required": [
                     "message"
                   ],
@@ -1129,6 +1186,11 @@
                 "message",
                 "data"
               ],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1140,6 +1202,9 @@
                 },
                 "data": {
                   "type": "object",
+                  "required": [
+                    "message"
+                  ],
                   "required": [
                     "message"
                   ],
