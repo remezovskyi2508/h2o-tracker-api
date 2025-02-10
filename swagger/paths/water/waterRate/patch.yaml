@@ -12,12 +12,12 @@ requestBody:
       schema:
         type: object
         properties:
-          waterRate:
+          dailyNorm:
             type: number
             example: 2500
 responses:
   '200':
-    description: Water rate updated successfully
+    description: Daily norm updated successfully
     content:
       application/json:
         schema:
@@ -25,8 +25,8 @@ responses:
           properties:
             message:
               type: string
-              example: 'Water rate updated successfully'
-            waterRate:
+              example: 'Daily norm updated successfully'
+            dailyNorm:
               type: number
               example: 2500
   '400':
