@@ -56,8 +56,17 @@ export const logoutController = async (req, res) => {
 
     await authServices.logout(sessionId);
 
-    res.clearCookie('accessToken');
-    res.clearCookie('sessionId');
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+
+    res.clearCookie('sessionId', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
 
     res.status(204).send();
   } catch (error) {
