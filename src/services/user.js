@@ -1,18 +1,14 @@
-import SessionCollection from "../db/models/session.js";
-import UserCollection from "../db/models/user.js";
-
+import { getUserByIdController } from '../controllers/user.js';
+import SessionCollection from '../db/models/session.js';
+import UserCollection from '../db/models/user.js';
 
 export const getUserById = async (id) => {
-
   console.log('Searching for user with id:', id);
   const user = await UserCollection.findById(id);
   console.log('Found user:', user);
   return user;
-
 };
 export const getUser = (filter) => UserCollection.findOne(filter);
-
-
 
 export const updateUser = async (filter, update, options = {}) => {
   const { upsert = false } = options;
@@ -24,7 +20,7 @@ export const updateUser = async (filter, update, options = {}) => {
       new: true,
       upsert,
       runValidators: true,
-    }
+    },
   );
 
   if (!result) return null;
@@ -35,3 +31,11 @@ export const updateUser = async (filter, update, options = {}) => {
   };
 };
 export const getSession = (filter) => SessionCollection.findOne(filter);
+
+export const getCurrentUser = async (userId) => {
+  const user = await getUserById.findById(userId); // Отримуємо користувача по ID
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user; // Повертаємо дані користувача
+};

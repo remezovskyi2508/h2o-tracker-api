@@ -9,9 +9,8 @@ import {
 import {
   authLoginSchema,
   authRegisterSchema,
-  // resetPasswordSchema,
 } from '../validation/auth.js';
-// import { authenticate } from '../middlewares/authenticate.js';
+
 
 const authRouter = Router();
 
@@ -21,13 +20,17 @@ authRouter.post(
 
   ctrlWrapper(registerController),
 );
-// console.log(authController);
-// console.log(authController.loginController);
+
 authRouter.post(
   '/login',
   validateBody(authLoginSchema),
   ctrlWrapper(loginController),
 );
+
+authRouter.post('/logout', ctrlWrapper(logoutController));
+
+export default authRouter;
+
 
 // authRouter.put(
 //   '/reset-pwd',
@@ -36,9 +39,6 @@ authRouter.post(
 //   ctrlWrapper(authController.resetPasswodController),
 // );
 
-authRouter.post('/logout', ctrlWrapper(logoutController));
-
-export default authRouter;
 
 // authRouter.post(
 //   '/send-reset-email',

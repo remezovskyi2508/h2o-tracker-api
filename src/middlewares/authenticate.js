@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import {getUser, getSession} from '../services/user.js';
+import { getUser, getSession } from '../services/user.js';
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -30,6 +30,6 @@ export const authenticate = async (req, res, next) => {
     return next(createHttpError(401, 'User not found'));
   }
 
-  req.user = user;
+  req.user = user; // Додаємо інформацію про користувача до запиту
   next();
 };
