@@ -1,6 +1,6 @@
-WaterRate:
+dailyNorm:
   type: object
   properties:
-    waterRate:
+    dailyNorm:
       type: number
       example: 2500
