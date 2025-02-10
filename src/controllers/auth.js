@@ -19,11 +19,18 @@ export const loginController = async (req, res) => {
 
   res.cookie('accessToken', accessToken, {
     expires: new Date(accessTokenValidUntil),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
   });
 
   res.cookie('sessionId', sessionId, {
     expires: new Date(accessTokenValidUntil),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
   });
+
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',

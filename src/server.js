@@ -18,7 +18,12 @@ const PORT = Number(process.env.PORT) || 3000;
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: 'https://h2o-tracker-ui.vercel.app',
+      credentials: true,
+    }),
+  );
 
   app.use(express.json());
 
