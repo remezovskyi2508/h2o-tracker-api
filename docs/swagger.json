@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "https://h2o-tracker-api.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [

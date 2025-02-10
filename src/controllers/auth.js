@@ -1,7 +1,6 @@
 import * as authServices from '../services/auth.js';
 
-
-export const registerController = async (req, res) => {
+export const registerController = async (req, res, next) => {
   const { userId, email } = await authServices.register(req.body);
 
   res.status(201).json({
@@ -23,7 +22,6 @@ export const loginController = async (req, res) => {
   });
 
   res.cookie('sessionId', sessionId, {
-
     expires: new Date(accessTokenValidUntil),
   });
   res.json({
@@ -35,7 +33,6 @@ export const loginController = async (req, res) => {
     },
   });
 };
-
 
 export const logoutController = async (req, res) => {
   if (req.cookies.sessionId) {

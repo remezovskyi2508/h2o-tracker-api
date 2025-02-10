@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import * as authController from '../controllers/auth.js';
+import {
+  registerController,
+  loginController,
+  logoutController,
+} from '../controllers/auth.js';
 import {
   authLoginSchema,
   authRegisterSchema,
@@ -11,19 +15,18 @@ import {
 
 const authRouter = Router();
 
-
 authRouter.post(
   '/register',
   validateBody(authRegisterSchema),
 
-  ctrlWrapper(authController.registerController),
+  ctrlWrapper(registerController),
 );
-console.log(authController);
-console.log(authController.loginController);
+// console.log(authController);
+// console.log(authController.loginController);
 authRouter.post(
   '/login',
   validateBody(authLoginSchema),
-  ctrlWrapper(authController.loginController),
+  ctrlWrapper(loginController),
 );
 
 // authRouter.put(
@@ -33,7 +36,7 @@ authRouter.post(
 //   ctrlWrapper(authController.resetPasswodController),
 // );
 
-authRouter.post('/logout', ctrlWrapper(authController.logoutController));
+authRouter.post('/logout', ctrlWrapper(logoutController));
 
 export default authRouter;
 
