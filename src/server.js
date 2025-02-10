@@ -20,7 +20,7 @@ export const setupServer = () => {
 
   app.use(
     cors({
-      origin: 'https://h2o-tracker-ui.vercel.app',
+      origin: ['https://h2o-tracker-ui.vercel.app', 'http://localhost:5173'],
       credentials: true,
     }),
   );
