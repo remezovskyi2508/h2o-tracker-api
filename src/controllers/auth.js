@@ -35,12 +35,25 @@ export const loginController = async (req, res) => {
 };
 
 export const logoutController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await authServices.logout(req.cookies.sessionId); //якщо э кого розлогінити розлогінь
+  try {
+    let sessionId = req.cookies?.sessionId;
+    if (!sessionId) {
+      return res.status(400).json({ message: 'Session ID is missing' });
+    }
+
+    try {
+      sessionId = JSON.parse(decodeURIComponent(sessionId));
+    } catch (error) {
+      console.log('Session ID is not in JSON format, using raw value.');
+    }
+
+    await authServices.logout(sessionId);
+
+    res.clearCookie('accessToken');
+    res.clearCookie('sessionId');
+
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  res.clearCookie('accessToken');
-  res.clearCookie('sessionId');
-
-  res.status(204).send();
 };
