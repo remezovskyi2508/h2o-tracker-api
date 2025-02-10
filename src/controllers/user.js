@@ -64,7 +64,6 @@ export const updateUserController = async (req, res) => {
   const { id } = req.params;
   const { oldPassword, newPassword, ...userData } = req.body;
 
-
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
@@ -73,14 +72,20 @@ export const updateUserController = async (req, res) => {
     await resetPassword(id, oldPassword, newPassword);
   }
 
-  const result = await userServices.updateUser(
-    { _id: id },
-    userData,
-  );
+  const result = await userServices.updateUser({ _id: id }, userData);
 
   res.json({
     status: 200,
     message: `User with id=${id} updated successfully`,
     data: result,
+  });
+};
+
+export const getCurrentUserController = async (req, res, next) => {
+  const user = req.user;
+  res.json({
+    status: 200,
+    message: 'User data retrieved successfully',
+    data: user,
   });
 };

@@ -13,6 +13,12 @@ const userRouter = Router();
 userRouter.use(authenticate);
 
 userRouter.get(
+  '/current',
+  authenticate,
+  ctrlWrapper(userController.getCurrentUserController),
+);
+
+userRouter.get(
   '/:id',
   isValidUserId,
   ctrlWrapper(userController.getUserByIdController),
@@ -26,13 +32,12 @@ userRouter.patch(
   ctrlWrapper(userController.updateUserAvatar),
 );
 
-
 userRouter.patch(
   '/:id',
   authenticate,
   isValidUserId,
   validateBody(userValidSchema.userUpdateSchema),
-  ctrlWrapper(userController.updateUserController)
+  ctrlWrapper(userController.updateUserController),
 );
 
 export default userRouter;

@@ -1,0 +1,39 @@
+tags:
+  - Users
+summary: Get information about the current user
+operationId: getCurrentUser
+description: This endpoint allows you to check whether the session is active and return the current user's data. In case of an invalid token or session expiration, a 401 error is returned.
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully obtaining user information
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'User data retrieved successfully'
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: '5f4e5b1f4b5e9c001fd9c35d'
+                email:
+                  type: string
+                  example: 'user@example.com'
+                dailyNorm:
+                  type: integer
+                  example: 1800
+  '401':
+    description: Unauthorized (the token is invalid or missing)
+    $ref: ../../../components/responses/401.yaml
+  '500':
+    description: Server error
+    $ref: ../../../components/responses/500.yaml
