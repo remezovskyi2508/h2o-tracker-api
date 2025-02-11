@@ -2,7 +2,8 @@ import createError from 'http-errors';
 import * as userServices from '../services/user.js';
 // import { getEnvVar } from "../utils/getEnvVar.js";
 import * as cloudUse from '../utils/saveFileToCloudinary.js';
-import { resetPassword } from '../services/auth.js';
+import { getSession, resetPassword } from '../services/auth.js';
+import createHttpError from 'http-errors';
 
 export const getUserByIdController = async (req, res) => {
   const { id } = req.params;
@@ -82,10 +83,21 @@ export const updateUserController = async (req, res) => {
 };
 
 export const getCurrentUserController = async (req, res, next) => {
-  const user = req.user;
+  const user = req.user; // Витягуємо користувача з req.user
+  const session = await getSession({ userId: user._id }); // Отримуємо сесію користувача
+
+  if (!session) {
+    return next(createHttpError(401, 'Session not found'));
+  }
+
+  // Повертаємо лише необхідні дані: id, accessToken та sessionId
   res.json({
     status: 200,
     message: 'User data retrieved successfully',
-    data: user,
+    data: {
+      id: user._id,
+      accessToken: session.accessToken,
+      sessionId: session._id,
+    },
   });
 };

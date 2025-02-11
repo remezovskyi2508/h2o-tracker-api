@@ -1,6 +1,9 @@
 import { getUserByIdController } from '../controllers/user.js';
 import SessionCollection from '../db/models/session.js';
 import UserCollection from '../db/models/user.js';
+import { updateUserWaterRate } from './waterRateService.js';
+import { getTodayWaterRecords } from './waterService.js';
+import { getMonthlyStats } from './waterStatsService.js';
 
 export const getUserById = async (id) => {
   console.log('Searching for user with id:', id);
@@ -31,11 +34,3 @@ export const updateUser = async (filter, update, options = {}) => {
   };
 };
 export const getSession = (filter) => SessionCollection.findOne(filter);
-
-export const getCurrentUser = async (userId) => {
-  const user = await getUserById.findById(userId); // Отримуємо користувача по ID
-  if (!user) {
-    throw new Error('User not found');
-  }
-  return user; // Повертаємо дані користувача
-};
