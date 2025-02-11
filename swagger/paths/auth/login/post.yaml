@@ -50,6 +50,9 @@ responses:
                 userId:
                   type: string
                   example: '67a0e9c6d68fd2d13913a587'
+                sessionId:
+                  type: string
+                  example: '67abb107b5385ad4fc6b13ec'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '500':
