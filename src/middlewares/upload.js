@@ -19,18 +19,24 @@ const limits = {
 };
 
 const fileFilter = (req, file, cb) => {
- // Перевіряємо тип файлу для аватарів
- if (!file.mimetype.startsWith('image/')) {
-  return cb(createHttpError(400, 'Only image files are allowed'));
-}
+  if (!file.mimetype.startsWith('image/')) {
+    return cb(createHttpError(400, 'Only image files are allowed'));
+  }
 
-const extension = file.originalname.split('.').pop().toLowerCase();
-// Дозволені розширення для зображень
-const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+  const extension = file.originalname.split('.').pop().toLowerCase();
 
-if (!allowedExtensions.includes(extension)) {
-  return cb(createHttpError(400, `File extension .${extension} is not allowed. Use: ${allowedExtensions.join(', ')}`));
-}
+  const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+  if (!allowedExtensions.includes(extension)) {
+    return cb(
+      createHttpError(
+        400,
+        `File extension .${extension} is not allowed. Use: ${allowedExtensions.join(
+          ', ',
+        )}`,
+      ),
+    );
+  }
   if (extension === 'exe') {
     return cb(createHttpError(400, 'file with .exe extention not allow'));
   }
