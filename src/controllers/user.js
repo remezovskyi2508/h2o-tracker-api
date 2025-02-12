@@ -1,6 +1,5 @@
 import createError from 'http-errors';
 import * as userServices from '../services/user.js';
-// import { getEnvVar } from "../utils/getEnvVar.js";
 import * as cloudUse from '../utils/saveFileToCloudinary.js';
 import { getSession, resetPassword } from '../services/auth.js';
 import createHttpError from 'http-errors';
@@ -28,20 +27,17 @@ export const updateUserAvatar = async (req, res) => {
     throw createError(400, 'Avatar file is required');
   }
 
-  // Перевіряємо існування користувача
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
 
-  // Видаляємо старий аватар якщо він існує
   if (user.avatar?.public_id) {
     await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
   }
-  // Завантажуємо новий аватар
+
   const avatarData = await cloudUse.saveAvatarToCloudinary(avatar);
 
-  // Оновлюємо дані користувача
   const result = await userServices.updateUser(
     { _id: id },
     {
@@ -83,14 +79,13 @@ export const updateUserController = async (req, res) => {
 };
 
 export const getCurrentUserController = async (req, res, next) => {
-  const user = req.user; // Витягуємо користувача з req.user
-  const session = await getSession({ userId: user._id }); // Отримуємо сесію користувача
+  const user = req.user;
+  const session = await getSession({ userId: user._id });
 
   if (!session) {
     return next(createHttpError(401, 'Session not found'));
   }
 
-  // Повертаємо лише необхідні дані: id, accessToken та sessionId
   res.json({
     status: 200,
     message: 'User data retrieved successfully',

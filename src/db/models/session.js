@@ -15,14 +15,6 @@ const sessionSchema = new Schema(
       type: Date,
       required: true,
     },
-    // refreshToken: {
-    //   type: String,
-    //   required: true,
-    // },
-    // refreshTokenValidUntil: {
-    //   type: Date,
-    //   required: true,
-    // },
   },
   {
     versionKey: false,
@@ -30,16 +22,12 @@ const sessionSchema = new Schema(
   },
 );
 
-//додати статуст помилки через хук для додавання якщо валідація не пройшла
 sessionSchema.post('save', handleSaveError);
 
-//перед оновл-ням включаєм валідацію
 sessionSchema.pre('findOneAndUpdate', setUpdateSettings);
 
-//додати статуст помилки через хук для оновлення
 sessionSchema.post('findOneAndUpdate', handleSaveError);
 
-//На основі схеми створ модель( клас)
 const SessionCollection = model('session', sessionSchema);
 
 export default SessionCollection;
