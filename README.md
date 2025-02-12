@@ -14,3 +14,6 @@ This is the backend for the Water Tracker project, developed as part of a team o
 - MongoDB for data storage (user data, water consumption records, etc.).<br/>
 - User authentication and data validation.<br/>
 - Scalable architecture for handling multiple users and daily data inputs.<br/>
+
+## Frontend 
+https://github.com/remezovskyi2508/h2o-tracker-ui
