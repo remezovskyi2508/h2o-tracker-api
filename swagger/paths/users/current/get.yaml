@@ -22,7 +22,7 @@ responses:
             data:
               type: object
               properties:
-                _id:
+                userId:
                   type: string
                   example: '5f4e5b1f4b5e9c001fd9c35d'
                 accessToken:

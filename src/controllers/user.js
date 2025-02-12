@@ -95,7 +95,7 @@ export const getCurrentUserController = async (req, res, next) => {
     status: 200,
     message: 'User data retrieved successfully',
     data: {
-      id: user._id,
+      userId: user._id,
       accessToken: session.accessToken,
       sessionId: session._id,
     },
